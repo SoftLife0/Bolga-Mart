@@ -23,7 +23,6 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Account</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -42,14 +41,28 @@
                         <span class="badge bg-dark text-white position-absolute top-0 start-100 translate-middle rounded-pill">0</span>
                     </a>
                     
-                    <!-- Profile Icon -->
-                    <a href="{% url 'login' %}" class="btn btn-outline-dark me-3">
-                        <i class="bi bi-person-fill"></i>
-                    </a>
+                    <!-- Profile Dropdown -->
+                    {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <a class="btn btn-outline-dark dropdown-toggle me-3" href="#" role="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-fill"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="#">{{ user.username }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}" title="Logout">Logout</a></li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-outline-dark me-3" title="Login">
+                            <i class="bi bi-person-fill"></i>
+                        </a>
+                    {% endif %}
+        
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 </div>
             </div>
         </nav>
+        
 
         <!-- Header-->
         {% comment %} <header class="py-5" style="background-image: url('{% block header_image %}{% static 'assets/bas.jpg' %}{% endblock %}'); background-size: cover; background-position: center;"> {% endcomment %}
@@ -57,6 +70,47 @@
 
         {% block body %}
         {% endblock %}
+
+        <!-- Toast for success or error messages -->
+        {% if messages %}
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <div id="toast{{ forloop.counter }}" class="toast bg-danger text-white" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="10000">
+                        <div class="toast-header bg-danger text-white">
+                            <strong class="me-auto">Error</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            {{ message }}
+                        </div>
+                    </div>
+                {% elif message.tags == 'success' %}
+                    <div id="toast{{ forloop.counter }}" class="toast bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="10000">
+                        <div class="toast-header bg-success text-white">
+                            <strong class="me-auto">Success</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            {{ message }}
+                        </div>
+                    </div>
+                {% else %}
+                    <div id="toast{{ forloop.counter }}" class="toast bg-info text-dark" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="10000">
+                        <div class="toast-header bg-info text-dark">
+                            <strong class="me-auto">{{ message.tags|title }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
@@ -64,6 +118,14 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
+        <script>
+            // Loop through and show all the toasts for each message
+            {% for message in messages %}
+                const toastEl{{ forloop.counter }} = document.getElementById('toast{{ forloop.counter }}');
+                const toast{{ forloop.counter }} = new bootstrap.Toast(toastEl{{ forloop.counter }});
+                toast{{ forloop.counter }}.show();
+            {% endfor %}
+        </script>
         <script src="{% static 'js/scripts.js' %}"></script>
     </body>
 </html>

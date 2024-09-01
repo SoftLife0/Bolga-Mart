@@ -80,6 +80,29 @@
   }
 }
 
+.text-animation--underline-thin {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.text-animation--underline-thin::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+.text-animation--underline-thin:hover::after {
+  width: 100%;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);

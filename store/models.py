@@ -29,6 +29,8 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     price = models.DecimalField(default=0, decimal_places=2, max_digits=6)
     description = models.CharField(max_length=200, default='', blank=True, null=True)
+    is_sale = models.BooleanField(default=False)
+    sale_price = models.DecimalField(default=0, decimal_places=2, max_digits=6)
     
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

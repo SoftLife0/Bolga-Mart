@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import *
+from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -13,22 +14,32 @@ def index(request):
     products = Product.objects.all()
     return render(request, 'index.html', {'products':products})
 
-def item(request):
-    products = Product.objects.all()
-    return render(request, 'item.html', context={'products':products})
+#Write a function to view each product
+
+def item(request, pk):
+    product = Product.objects.get(id=pk)
+    
+    
+    return render(request, 'item.html', context={'product':product})
 
 # Write a function to register user using the django admin auth
 def register_user(request):
+    form = RegisterForm()
     if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        user = User.objects.create_user(username=username, email=email, password=password)
-        user.save()
-        messages.success(request, 'Account created successfully. Please login.')
-        return redirect('login')
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, f'You have Registered Succesfully {username} ��!')
+            return redirect('login')
+        else:
+            messages.error(request, 'Whoops registration failed, please try again.')
+            return redirect('register')
     else:
-        return render(request, 'register.html', {})
+        return render(request, 'register.html', {'form':form})
 
 
 # Write a function to login user using the django admin auth

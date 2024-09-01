@@ -7,39 +7,31 @@
 <header class="py-5 bg-dark" >
     <div class="container px-4 px-lg-5 my-3">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Become a member</h1>
+            <h1 class="display-4 fw-bolder">Create an account</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Register for a User Account </p>
         </div>
     </div>
 </header>
 
-<div class="container px-4 px-lg-5 my-5">
-    <div class="row">
-        <div class="col-md-8 py-5">
-            <h2 class="">Customer Login</h2>
+<div class="container">
+    <div class="row"> 
+        <div class="col-md-5 offset-md-2 py-5">
             <br>
 
-            <form method="POST" action="">
+            <form method="POST" action="{% url 'register' %}">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="username">Email Address</label>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="john">
-                    <small id="emailHelpId" class="form-text text-muted">Help text</small>
-                </div>
-                <br>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="*************">
-                </div>
+                
+                {{ form.as_p }}
                 
                 <br>
 
-                <button class="btn btn-outline-dark" style="padding: 15px 28px;" type="submit">
-                    Login
-                    <i class="bi-arrow-right me-1"></i>
-                </button>
+                <button type="submit" class="btn btn-outline-dark w-100 mb-3" style="padding: 15px 20px;">Create</button>
+                <span>Already have an account? <a href="{% url 'login' %}" class="mb-2" style="color: black; font-weight: 400;">Login</a></span>
             </form>
         </div>
     </div>
 </div>
+
+
 
 {% endblock %}

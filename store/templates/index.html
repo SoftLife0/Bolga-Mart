@@ -1,11 +1,15 @@
 {% extends "layout.html" %}
 {% load static %}
-{% block title %}Home - My Shop{% endblock %}
-{% comment %} {% block header_image %}{% static 'assets/bas.jpg' %}{% endblock %} {% endcomment %}
-{% block header_title %}Shop in style{% endblock %}
-{% block header_description %}With this shop homepage template{% endblock %}
-
 {% block body %}
+
+<header class="py-5 bg-dark" >
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">{% block header_title %}Handmade Waiven Basket {% endblock %}</h1>
+            <p class="lead fw-normal text-white-50 mb-0">{% block header_description %} Grab your waived basket now !!!! {% endblock %}</p>
+        </div>
+    </div>
+</header>
 
 <!-- Section-->
 <section class="py-5">

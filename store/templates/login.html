@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}Login {% endblock %}
+
+{% block body %}
+
+<header class="py-5 bg-dark" >
+    <div class="container px-4 px-lg-5 my-3">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Login to your Account</h1>
+        </div>
+    </div>
+</header>
+
+<div class="container px-4 px-lg-5 my-5">
+    <div class="row">
+        <div class="col-6 py-5">
+            <h2 class="">Customer Login</h2>
+            <br>
+
+            <form methods="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="name@gmail.com">
+                <small id="emailHelpId" class="form-text text-muted">Help text</small>
+                </div>
+                <br>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="*************">
+                </div>
+                
+                <br>
+
+                <button class="btn btn-outline-dark" style="padding: 15px 28px;" type="button">
+                    Login
+                    <i class="bi-arrow-right me-1"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

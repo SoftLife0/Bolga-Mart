@@ -36,7 +36,7 @@
                 </div>
                 <div class="d-flex align-items-center">
                     <!-- Cart Icon -->
-                    <a href="#" class="btn btn-outline-dark position-relative me-3">
+                    <a href="#" class="btn btn-outline-dark position-relative me-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                         <i class="bi bi-cart-fill"></i>
                         <span class="badge bg-dark text-white position-absolute top-0 start-100 translate-middle rounded-pill">0</span>
                     </a>
@@ -109,6 +109,17 @@
                 {% endfor %}
             </div>
         {% endif %}
+
+        <div class="offcanvas offcanvas-end bg-white" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Shopping Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+            <!-- Cart content goes here -->
+            <p>Your cart is empty.</p>
+            </div>
+        </div>
 
 
         <!-- Footer-->

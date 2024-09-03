@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.http import JsonResponse
+
 
 # Create your views here.
 
@@ -71,16 +73,3 @@ def category(request, cat):
     categories = Category.objects.all()
     context = {'cat_products': cat_products, 'categories': categories}
     return render(request, 'category.html', context)
-
-
-def cart_summary(request):
-    return render(request, "cart_summary.html", {})
-
-def cart_add(request):
-    return render(request, "cart_add.html", {})
-
-def cart_delete(request):
-    return render(request, "cart_delete.html", {})
-
-def cart_update(request):
-    return render(request, "cart_update.html", {})

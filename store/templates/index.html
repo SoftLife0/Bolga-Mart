@@ -19,11 +19,6 @@
                 <div class="col mb-5">
                     <a href="{% url 'item' product.id %}" class="text-decoration-none" style="color: black;">
                     <div class="card h-100" style="border: none;">
-                        {% if product.is_sale %}
-                            <!-- Sale badge-->
-                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sold Out</div>
-                        {% endif %}
-                        
                         <!-- Product image (square-shaped with spacing) -->
                         <div class="image-container" style="position: relative; width: 100%; padding-top: 100%; overflow: hidden; border-radius: 12px;">
                             <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}" style="object-fit: cover; position: absolute; top: 0; left: 0; width: 100%; height: 100%;" />
@@ -37,16 +32,21 @@
                             {% else %}
                                 ₵{{ product.price }}
                             {% endif %}
+                            {% if product.is_sale %}
+                                <!-- Sale badge-->
+                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sold Out</div>
+                            {% endif %}
+                        
                         </div>
 
                         <!-- Product details-->
                         <div class="pt-2">
                             <div class="d-flex justify-content-between align-items-center">
-                                <!-- Product name with animated underline-->
+                                <!-- Product name -->
                                 <span class="text-animation--underline-thin text-size--large text-weight--bold">{{ product.name }}</span>
-                                
+                        
                                 <!-- Cart icon with reduced size-->
-                                <a href="#" class="text-dark">
+                                <a href="" class="text-dark add-to-cart-btn">
                                     <i class="bi-cart-fill me-1" style="font-size: 1.2rem;"></i>
                                 </a>
                             </div>

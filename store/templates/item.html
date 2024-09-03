@@ -21,7 +21,7 @@
                 <p class="lead">{{ product.description }}</p>
                 <div class="d-flex">
                     <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button" value="{{ product.id }}" id="add-cart">
                         <i class="bi-cart-fill me-1"></i>
                         Add to cart
                     </button>
@@ -60,5 +60,32 @@
     </div>
 </section>
         
+
+
+<script>
+    $(document).on('click', '#add-cart', function(e){
+        e.preventDfault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_add' %}',
+            data: {
+                product_id: $('#add-cart').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+
+            success: function(json){
+               // console.log(json)
+               document.getElementById("card_quantity").textContent = json.qty
+            },
+
+            error: function(xhr, errmsg, err){
+                
+            }
+
+        });
+    })
+</script>
+
 
 {% endblock %}
